@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chosen Grace Awiten | Work</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/achievements.css" />
+</head>
+<body>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">chzn</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="work.html" class="active">Work</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== WORK PAGE HEADER ===== -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">My Work</h1>
+            <p class="page-subtitle">
+                Here are some things I've built. Most started with 
+                <span class="highlight">"What if..."</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS GRID ===== -->
+    <section class="projects-grid">
+        <div class="container">
+
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-card-image">
+                    <img src="images/screenshot1.png" alt="COR to Timetable Screenshot" class="project-screenshot" />
+                </div>
+                <div class="project-card-content">
+                    <h2 class="project-card-title">COR to Timetable & Lockscreen Wallpaper</h2>
+                    <p class="project-card-desc">
+                        Turn your USTP COR pdf into a timetable, a lockscreen wallpaper, or an ics file.
+                    </p>
+                    <div class="project-card-problem">
+                        <strong>Problem:</strong> 
+                        <span>Reading your schedule from your raw USTP COR is inefficient.</span>
+                    </div>
+                    <div class="project-card-solution">
+                        <strong>Solution:</strong> 
+                        <span>Just be lazy, and use this project that I developed.</span>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://whatsmysched.netlify.app/" class="btn btn-small btn-primary">Visit Here</a>
+                        <a href="https://github.com/chzn-ichi/cor-timetable" class="btn btn-small btn-secondary">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-card-image">
+                    <img src="images/screenshot2.png" alt="Turn-Based Translator Screenshot" class="project-screenshot" />
+                </div>
+                <div class="project-card-content">
+                    <h2 class="project-card-title">Michi (Language Translator)</h2>
+                    <p class="project-card-desc">
+                        Remember Benji Bananas? The game where one side is upside down so two players can play together? We did the same thing with a language translator. Best to use on mobile.
+                    </p>
+                    <div class="project-card-problem">
+                        <strong>Problem:</strong> 
+                        <span>In other translators, we kept clicking the switch button and passing phones back and forth to let each person read the translation.</span>
+                    </div>
+                    <div class="project-card-solution">
+                        <strong>Solution:</strong> 
+                        <span>Just use this for smooth, face-to-face conversation.</span>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://michitranslate.netlify.app/" class="btn btn-small btn-primary">Visit Here</a>
+                        <a href="https://github.com/chzn-ichi/turn-based-ai-translator" class="btn btn-small btn-secondary">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ===== ACHIEVEMENTS MODAL ===== -->
+    <div class="achievement-modal-overlay" id="achievementModal">
+        <div class="achievement-modal">
+            <div class="achievement-modal-header">
+                <h2 class="achievement-modal-title">
+                    <img src="images/achievements/trophy.png" alt="Achievements" class="achievement-modal-icon" />
+                    <span>Achievements</span>
+                </h2>
+                <button class="achievement-modal-close" id="achievementModalClose">✕</button>
+            </div>
+            
+            <div class="achievement-modal-progress">
+                <div class="achievement-modal-progress-text">
+                    <span>Progress</span>
+                    <span id="achievementProgressText">0/12</span>
+                </div>
+                <div class="achievement-modal-progress-bar">
+                    <div class="achievement-modal-progress-fill" id="achievementProgressFill" style="width: 0%;"></div>
+                </div>
+            </div>
+            
+            <div class="achievement-grid" id="achievementGrid">
+                <!-- Filled by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===== ACHIEVEMENT BADGE ===== -->
+    <div class="achievement-badge" id="achievementBadge" onclick="window.Achievements.toggleModal()">
+        <img src="images/achievements/trophy.png" alt="Achievements" class="achievement-modal-icon" />
+        <span class="achievement-badge-text">
+            <span class="achievement-badge-count">0/12</span>
+        </span>
+        <div class="achievement-badge-progress">
+            <div class="achievement-badge-progress-fill" style="width: 0%;"></div>
+        </div>
+    </div>
+
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 Chosen Grace Awiten. Built with love and lots of AI prompting.</p>
+                <div class="footer-links">
+                    <a href="https://github.com/chzn-ichi" target="_blank">
+                        <img src="images/github-icon.png" alt="GitHub" class="footer-icon" />
+                    </a>
+                    <a href="https://www.linkedin.com/in/chosen-grace-awiten-b89368368/" target="_blank">
+                        <img src="images/linkedin-icon.png" alt="LinkedIn" class="footer-icon" />
+                    </a>
+                    <a href="https://x.com/chznichi" target="_blank">
+                        <img src="images/x-icon.png" alt="X" class="footer-icon" />
+                    </a>
+                    <a href="https://www.instagram.com/chzn.ichi" target="_blank">
+                        <img src="images/ig-icon.png" alt="Instagram" class="footer-icon" />
+                    </a>
+                    <a href="https://www.facebook.com/chozen.awiten" target="_blank">
+                        <img src="images/fb-icon.png" alt="Facebook" class="footer-icon" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/achievements.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- Page Hopper Achievement -->
+    <script>
+        window.Achievements.checkPageHopper(['work']);
+    </script>
+
+    <!-- Project Viewer + Star Gazer Achievements -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const allLinks = document.querySelectorAll('.project-links a');
+            
+            allLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (!window.Achievements) return;
+                    
+                    if (this.href.includes('github')) {
+                        window.Achievements.checkStarGazer();
+                        console.log('⭐ Star Gazer achievement triggered!');
+                    } else {
+                        window.Achievements.checkProjectViewer();
+                        console.log('📂 Project Viewer achievement triggered!');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

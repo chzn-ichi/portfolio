@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chosen Grace Awiten | Contact</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/achievements.css" />
+</head>
+<body>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">chzn</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== CONTACT PAGE HEADER ===== -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Let's Talk</h1>
+            <p class="page-subtitle">
+                Want to hire me? Or do a collab? Or just want to talk?  
+                <span class="highlight">I'm all ears.</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT FORM + SOCIALS ===== -->
+    <section class="contact-section">
+        <div class="container">
+
+            <div class="contact-grid">
+
+                <!-- ===== CONTACT FORM ===== -->
+                <div class="contact-form">
+                    <form id="contactForm" action="https://formspree.io/f/xzdloqlz" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your name" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" placeholder="What's on your mind?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                    </form>
+                </div>
+
+                <!-- Social Links -->
+                <div class="contact-socials">
+                    <h3 class="socials-title">Find me elsewhere</h3>
+                    <div class="social-links">
+                        <a href="https://github.com/chzn-ichi" target="_blank" class="social-link">
+                            <img src="images/github-icon.png" alt="GitHub" class="social-icon-img" />
+                            GitHub
+                        </a>
+                        <a href="https://www.linkedin.com/in/chosen-grace-awiten-b89368368/" target="_blank" class="social-link">
+                            <img src="images/linkedin-icon.png" alt="LinkedIn" class="social-icon-img" />
+                            LinkedIn
+                        </a>
+                        <a href="https://x.com/chznichi" target="_blank" class="social-link">
+                            <img src="images/x-icon.png" alt="X" class="social-icon-img" />
+                            X (Twitter)
+                        </a>
+                        <a href="https://www.instagram.com/chzn.ichi" target="_blank" class="social-link">
+                            <img src="images/ig-icon.png" alt="Instagram" class="social-icon-img" />
+                            Instagram
+                        </a>
+                        <a href="https://www.facebook.com/chozen.awiten" target="_blank" class="social-link">
+                            <img src="images/fb-icon.png" alt="Facebook" class="social-icon-img" />
+                            Facebook
+                        </a>
+                        <a href="mailto:awiten.chosengrace@gmail.com" class="social-link">
+                            <img src="images/gmail-icon.png" alt="Email" class="social-icon-img" />
+                            Email
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ===== SUCCESS MODAL ===== -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-container">
+            <h2 class="modal-title">Message Sent!</h2>
+            <p class="modal-message">
+                Thanks for reaching out! I'll get back to you as soon as possible.
+            </p>
+            <p class="modal-sub-message">
+                In the meantime, feel free to connect with me on social media.
+            </p>
+            <button class="btn btn-primary modal-btn" id="closeModal">Got It!</button>
+        </div>
+    </div>
+
+
+    <!-- ===== ACHIEVEMENTS MODAL ===== -->
+    <div class="achievement-modal-overlay" id="achievementModal">
+        <div class="achievement-modal">
+            <div class="achievement-modal-header">
+                <h2 class="achievement-modal-title">
+                    <img src="images/achievements/trophy.png" alt="Achievements" class="achievement-modal-icon" />
+                    <span>Achievements</span>
+                </h2>
+                <button class="achievement-modal-close" id="achievementModalClose">✕</button>
+            </div>
+            
+            <div class="achievement-modal-progress">
+                <div class="achievement-modal-progress-text">
+                    <span>Progress</span>
+                    <span id="achievementProgressText">0/12</span>
+                </div>
+                <div class="achievement-modal-progress-bar">
+                    <div class="achievement-modal-progress-fill" id="achievementProgressFill" style="width: 0%;"></div>
+                </div>
+            </div>
+            
+            <div class="achievement-grid" id="achievementGrid">
+                <!-- Filled by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===== ACHIEVEMENT BADGE ===== -->
+    <div class="achievement-badge" id="achievementBadge" onclick="window.Achievements.toggleModal()">
+        <img src="images/achievements/trophy.png" alt="Achievements" class="achievement-modal-icon" />
+        <span class="achievement-badge-text">
+            <span class="achievement-badge-count">0/12</span>
+        </span>
+        <div class="achievement-badge-progress">
+            <div class="achievement-badge-progress-fill" style="width: 0%;"></div>
+        </div>
+    </div>
+
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 Chosen Grace Awiten. Built with love and lots of AI prompting.</p>
+                <div class="footer-links">
+                    <a href="https://github.com/chzn-ichi" target="_blank">
+                        <img src="images/github-icon.png" alt="GitHub" class="footer-icon" />
+                    </a>
+                    <a href="https://www.linkedin.com/in/chosen-grace-awiten-b89368368/" target="_blank">
+                        <img src="images/linkedin-icon.png" alt="LinkedIn" class="footer-icon" />
+                    </a>
+                    <a href="https://x.com/chznichi" target="_blank">
+                        <img src="images/x-icon.png" alt="X" class="footer-icon" />
+                    </a>
+                    <a href="https://www.instagram.com/chzn.ichi" target="_blank">
+                        <img src="images/ig-icon.png" alt="Instagram" class="footer-icon" />
+                    </a>
+                    <a href="https://www.facebook.com/chozen.awiten" target="_blank">
+                        <img src="images/fb-icon.png" alt="Facebook" class="footer-icon" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/achievements.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        window.Achievements.checkPageHopper(['contact']);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grace Awiten | Curiosity</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/achievements.css" />
+    <style>
+        /* ============================================
+           CURIOSITY PAGE - OVERRIDES & ADDITIONS
+           ============================================ */
+        .curiosity-body {
+            min-height: 100vh;
+            background: var(--bg-primary);
+            overflow: hidden;
+            position: relative;
+            user-select: none;
+        }
+
+        .curiosity-body .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        /* ===== FLOATING CONTAINER ===== */
+        .float-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: 120px;
+            z-index: 1;  /* Keep this low */
+            pointer-events: none;
+        }
+
+        /* ===== FLOATING QUESTION RECTANGLES ===== */
+        .float-question {
+            position: absolute;
+            padding: 12px 20px;
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            cursor: grab;
+            pointer-events: all;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            white-space: nowrap;
+            max-width: 280px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            z-index: 1;  /* Behind the dropzone */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .float-question:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 4px 30px var(--accent-glow);
+        }
+
+        .float-question.dragging {
+            cursor: grabbing;
+            opacity: 0.9;
+            transform: scale(1.05);
+            z-index: 99999 !important;  /* SUPER high */
+            box-shadow: 0 8px 40px rgba(0, 251, 255, 0.3);
+        }
+
+        .float-question.dropped {
+            display: none;
+        }
+
+        /* ===== CENTER RECTANGLE (DROP ZONE) ===== */
+        .center-dropzone {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 420px;
+            height: 140px;
+            background: var(--bg-secondary);
+            border: 2px dashed rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            z-index: 10;  /* Above floating questions */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
+            pointer-events: none;
+        }
+
+        .center-dropzone.drag-over {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 60px var(--accent-glow);
+        }
+
+        .center-dropzone .drop-zone-text {
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            text-align: center;
+            pointer-events: none;
+        }
+
+
+
+        .center-dropzone .drop-zone-text .highlight {
+            color: var(--accent-cyan);
+        }
+
+        /* ===== DROPPED QUESTION INSIDE CENTER ===== */
+        .center-question {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 16px 24px;
+            background: var(--bg-card);
+            border: 2px solid var(--accent-cyan);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            text-align: center;
+            max-width: 90%;
+            box-shadow: 0 0 40px var(--accent-glow);
+            pointer-events: none;
+            width: auto;
+            min-width: 300px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+            z-index: 15;  /* Above dropzone */
+        }
+
+        .center-question-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 60px;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .center-question .question-front,
+        .center-question .question-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            min-height: 60px;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 24px;
+            border-radius: var(--radius-sm);
+        }
+
+        .center-question .question-front {
+            transform: rotateX(0deg);
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .center-question .question-back {
+            transform: rotateX(180deg);
+            background: var(--bg-card);
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .center-question.flipped .center-question-inner {
+            transform: rotateX(180deg);
+        }
+
+        /* ===== DISMISS BUTTON ===== */
+        .dismiss-btn {
+            position: absolute;
+            bottom: -36px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            padding: 4px 16px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-family: var(--font-body);
+            transition: all 0.3s ease;
+            pointer-events: all;
+            opacity: 0;
+            z-index: 100;
+        }
+
+        .dismiss-btn:hover {
+            border-color: var(--accent-cyan);
+            color: var(--text-primary);
+        }
+
+        .dismiss-btn.visible {
+            opacity: 1;
+        }
+
+        /* ===== LEVER (Pull Cord) ===== */
+        .lever-wrapper {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            pointer-events: none;
+            width: 420px;
+            height: 320px;
+        }
+
+        .lever-container {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: all;
+            cursor: grab;
+            z-index: 1;  /* Above dropzone */
+        }
+
+        .lever-container:active {
+            cursor: grabbing;
+        }
+
+        .lever-cord {
+            width: 4px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--text-muted), var(--accent-cyan));
+            border-radius: 2px;
+            transition: height 0.15s ease;
+            position: relative;
+        }
+
+        .lever-cord::after {
+            content: '⬇';
+            position: absolute;
+            bottom: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+        }
+
+        .lever-handle {
+            width: 40px;
+            height: 16px;
+            background: var(--accent-cyan);
+            border-radius: 8px;
+            margin-top: 4px;
+            box-shadow: 0 0 20px var(--accent-glow);
+            transition: transform 0.15s ease;
+            position: relative;
+        }
+
+        .lever-handle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        .lever-label {
+            color: var(--text-muted);
+            font-family: var(--font-code);
+            font-size: 0.65rem;
+            margin-top: 6px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .lever-container.pulling .lever-cord {
+            height: 90px;
+        }
+
+        .lever-container.pulling .lever-handle {
+            transform: translateY(15px);
+        }
+
+        /* ===== BACK BUTTON ===== */
+        .back-btn {
+            position: fixed;
+            top: 80px;
+            left: 24px;
+            z-index: 50;
+            color: var(--text-secondary);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            padding: 8px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            pointer-events: all;
+        }
+
+        .back-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--accent-cyan);
+            transform: translateX(-4px);
+        }
+
+        /* ===== COUNTER ===== */
+        .question-counter {
+            position: fixed;
+            top: 80px;
+            right: 24px;
+            z-index: 50;
+            color: var(--text-muted);
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            padding: 6px 14px;
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 100px;
+        }
+
+        .question-counter span {
+            color: var(--accent-cyan);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            .center-dropzone {
+                width: 280px;
+                height: 120px;
+            }
+
+            .float-question {
+                font-size: 0.75rem;
+                padding: 8px 14px;
+                max-width: 180px;
+            }
+
+            .lever-wrapper {
+                width: 280px;
+                height: 240px;
+            }
+
+            .lever-container {
+                bottom: -40px;
+            }
+
+            .lever-cord {
+                height: 50px;
+            }
+
+            .lever-container.pulling .lever-cord {
+                height: 75px;
+            }
+
+            .lever-handle {
+                width: 32px;
+                height: 14px;
+            }
+
+            .center-question {
+                font-size: 0.9rem;
+                padding: 12px 16px;
+                min-width: 160px;
+                min-height: 60px;
+            }
+
+            .center-question .question-front,
+            .center-question .question-back {
+                padding: 12px 16px;
+                min-height: 50px;
+            }
+
+            .back-btn {
+                top: 72px;
+                left: 12px;
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+
+            .question-counter {
+                top: 72px;
+                right: 12px;
+                font-size: 0.7rem;
+                padding: 4px 12px;
+            }
+
+            .dismiss-btn {
+                bottom: -32px;
+                font-size: 0.65rem;
+                padding: 3px 12px;
+            }
+        }
+    </style>
+</head>
+<body class="curiosity-body">
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">chzn</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== BACK BUTTON ===== -->
+    <a href="about.html" class="back-btn">← Back</a>
+
+    <!-- ===== COUNTER ===== -->
+    <div class="question-counter">
+        <span id="questionCount">0</span> / <span id="totalQuestions">0</span>
+    </div>
+
+    <!-- ===== FLOATING CONTAINER ===== -->
+    <div class="float-container" id="floatContainer"></div>
+
+    <!-- ===== CENTER DROP ZONE ===== -->
+    <div class="center-dropzone" id="centerDropzone">
+        <div class="drop-zone-text">
+            Drop a question here<br />
+            <span class="highlight">Then pull the lever ↓</span>
+        </div>
+        <div class="center-question" id="centerQuestion" style="display: none;">
+            <div class="center-question-inner">
+                <div class="question-front" id="questionFront"></div>
+                <div class="question-back" id="questionBack"></div>
+            </div>
+            <button class="dismiss-btn" id="dismissBtn">✕ Remove</button>
+        </div>
+    </div>
+
+    <!-- ===== LEVER WRAPPER (Attached to Bottom of Dropzone) ===== -->
+    <div class="lever-wrapper" id="leverWrapper">
+        <div class="lever-container" id="leverContainer">
+            <div class="lever-cord" id="leverCord"></div>
+            <div class="lever-handle" id="leverHandle"></div>
+            <div class="lever-label">Pull</div>
+        </div>
+    </div>
+
+    <!-- ===== ACHIEVEMENTS MODAL ===== -->
+    <div class="achievement-modal-overlay" id="achievementModal">
+        <div class="achievement-modal">
+            <div class="achievement-modal-header">
+                <h2 class="achievement-modal-title">
+                    <img src="images/achievements/trophy.png" alt="Achievements" class="achievement-modal-icon" />
+                    <span>Achievements</span>
+                </h2>
+                <button class="achievement-modal-close" id="achievementModalClose">✕</button>
+            </div>
+            
+            <div class="achievement-modal-progress">
+                <div class="achievement-modal-progress-text">
+                    <span>Progress</span>
+                    <span id="achievementProgressText">0/12</span>
+                </div>
+                <div class="achievement-modal-progress-bar">
+                    <div class="achievement-modal-progress-fill" id="achievementProgressFill" style="width: 0%;"></div>
+                </div>
+            </div>
+            
+            <div class="achievement-grid" id="achievementGrid">
+                <!-- Filled by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===== ACHIEVEMENT BADGE ===== -->
+    <div class="achievement-badge" id="achievementBadge" onclick="window.Achievements.toggleModal()">
+        <img src="images/achievements/trophy.png" alt="Achievements" class="achievement-modal-icon" />
+        <span class="achievement-badge-text">
+            <span class="achievement-badge-count">0/12</span>
+        </span>
+        <div class="achievement-badge-progress">
+            <div class="achievement-badge-progress-fill" style="width: 0%;"></div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // DATA: QUESTIONS & ANSWERS
+        // ============================================
+        const qaData = [
+            { question: "How old am I?", answer: "19" },
+            { question: "What's my favorite color?", answer: "Cyan (#00fbff)" },
+            { question: "What's my dream job?", answer: "Web and Software Developer" },
+            { question: "What is my program?", answer: "BSIT" },
+            { question: "Where am I studying in college?", answer: "USTP-CDO" },
+            { question: "What is my favorite drink?", answer: "Fresh milk" },
+            { question: "What is my favorite programming language?", answer: "Python" },
+            { question: "What is my favorite animal?", answer: "Panda" },
+            { question: "What is my ATM card pin?", answer: "👀" },
+            { question: "Single or taken?", answer: "Why? Are you interested? 😍😋" },
+            { question: "Type sa lalaki?", answer: "Bakla" },
+            { question: "Who's my crush?", answer: "Send GCash to unlock premium answers" },
+            { question: "Do I vibe code?", answer: "Yes :<" },
+            { question: "How do I see myself 10 years from now?", answer: "I don't" },
+            { question: "A secret message for you:", answer: '"Phil. 1:3"' },
+            { question: "What is my favorite number?", answer: "67" },
+        ];
+
+        // ============================================
+        // STATE
+        // ============================================
+        let floatingElements = [];
+        let isDragging = false;
+        let dragElement = null;
+        let dragOffsetX = 0;
+        let dragOffsetY = 0;
+        let isPulled = false;
+        let droppedQuestion = null;
+        let answeredCount = 0;
+
+        const container = document.getElementById('floatContainer');
+        const dropzone = document.getElementById('centerDropzone');
+        const centerQuestion = document.getElementById('centerQuestion');
+        const questionFront = document.getElementById('questionFront');
+        const questionBack = document.getElementById('questionBack');
+        const leverContainer = document.getElementById('leverContainer');
+        const leverCord = document.getElementById('leverCord');
+        const leverHandle = document.getElementById('leverHandle');
+        const dismissBtn = document.getElementById('dismissBtn');
+        const questionCount = document.getElementById('questionCount');
+        const totalQuestions = document.getElementById('totalQuestions');
+
+        // ============================================
+        // INIT
+        // ============================================
+        totalQuestions.textContent = qaData.length;
+        questionCount.textContent = '0';
+
+        // Shuffle the questions
+        const shuffledData = [...qaData];
+        for (let i = shuffledData.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledData[i], shuffledData[j]] = [shuffledData[j], shuffledData[i]];
+        }
+
+        // Store available questions
+        let availableQuestions = [...shuffledData];
+
+        // ============================================
+        // CREATE FLOATING QUESTIONS
+        // ============================================
+        function createFloatingQuestion(qa) {
+            const el = document.createElement('div');
+            el.className = 'float-question';
+            el.textContent = qa.question;
+            el.dataset.question = qa.question;
+            el.dataset.answer = qa.answer;
+
+            // Random position (some off-screen)
+            const x = Math.random() * (window.innerWidth + 200) - 100;
+            const y = Math.random() * (window.innerHeight + 200) - 100;
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+
+            // Random speed (px per frame)
+            const speedX = (Math.random() - 0.5) * 0.8;
+            const speedY = (Math.random() - 0.5) * 0.8;
+            el.dataset.speedX = speedX;
+            el.dataset.speedY = speedY;
+
+            // Random rotation
+            el.style.transform = `rotate(${Math.random() * 6 - 3}deg)`;
+
+            // Store original position for boundary wrapping
+            el.dataset.posX = x;
+            el.dataset.posY = y;
+
+            // Drag events
+            el.addEventListener('mousedown', startDrag);
+            el.addEventListener('touchstart', startDragTouch, { passive: false });
+
+            container.appendChild(el);
+            floatingElements.push(el);
+            return el;
+        }
+
+        // ============================================
+        // SPAWN QUESTIONS INITIALLY
+        // ============================================
+        function spawnInitialQuestions() {
+            const count = Math.min(availableQuestions.length, 12);
+            for (let i = 0; i < count; i++) {
+                if (availableQuestions.length === 0) break;
+                const qa = availableQuestions.pop();
+                createFloatingQuestion(qa);
+            }
+        }
+
+        // ============================================
+        // SPAWN NEW QUESTIONS OVER TIME
+        // ============================================
+        function spawnNewQuestion() {
+            if (availableQuestions.length === 0) return;
+            if (floatingElements.length >= 20) return; // Max floating
+
+            const qa = availableQuestions.pop();
+            createFloatingQuestion(qa);
+        }
+
+        // Spawn a new question every 3-6 seconds
+        setInterval(spawnNewQuestion, 3000 + Math.random() * 3000);
+
+        // ============================================
+        // ANIMATION LOOP
+        // ============================================
+        function animateFloating() {
+            floatingElements.forEach(el => {
+                const speedX = parseFloat(el.dataset.speedX);
+                const speedY = parseFloat(el.dataset.speedY);
+
+                let x = parseFloat(el.dataset.posX);
+                let y = parseFloat(el.dataset.posY);
+
+                x += speedX;
+                y += speedY;
+
+                // Wrap around edges with some randomness
+                const padding = 100;
+                if (x > window.innerWidth + padding) x = -padding;
+                if (x < -padding) x = window.innerWidth + padding;
+                if (y > window.innerHeight + padding) y = -padding;
+                if (y < -padding) y = window.innerHeight + padding;
+
+                el.dataset.posX = x;
+                el.dataset.posY = y;
+                el.style.left = x + 'px';
+                el.style.top = y + 'px';
+
+                // Slight bob
+                const bob = Math.sin(Date.now() / 2000 + parseFloat(el.dataset.posX) / 500) * 0.3;
+                el.style.transform = `rotate(${parseFloat(el.style.transform?.match(/rotate\(([^)]+)\)/)?.[1] || 0) + 0.01}deg)`;
+            });
+
+            requestAnimationFrame(animateFloating);
+        }
+
+        // ============================================
+        // DRAG & DROP (Mouse)
+        // ============================================
+        function startDrag(e) {
+            // Check if there's already a question in the center
+            if (droppedQuestion !== null) {
+                e.preventDefault();
+                return; // Don't allow dragging
+            }
+            
+            if (e.target.classList.contains('float-question')) {
+                e.preventDefault();
+                dragElement = e.target;
+                isDragging = true;
+                const rect = dragElement.getBoundingClientRect();
+                dragOffsetX = e.clientX - rect.left;
+                dragOffsetY = e.clientY - rect.top;
+                dragElement.classList.add('dragging');
+                dragElement.style.position = 'fixed';
+                dragElement.style.left = (e.clientX - dragOffsetX) + 'px';
+                dragElement.style.top = (e.clientY - dragOffsetY) + 'px';
+                dragElement.style.zIndex = '100';
+                dropzone.classList.add('drag-over');
+            }
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging && dragElement) {
+                dragElement.style.left = (e.clientX - dragOffsetX) + 'px';
+                dragElement.style.top = (e.clientY - dragOffsetY) + 'px';
+                dragElement.dataset.posX = e.clientX - dragOffsetX;
+                dragElement.dataset.posY = e.clientY - dragOffsetY;
+
+                const dropRect = dropzone.getBoundingClientRect();
+                const elRect = dragElement.getBoundingClientRect();
+                const centerX = elRect.left + elRect.width / 2;
+                const centerY = elRect.top + elRect.height / 2;
+
+                if (centerX > dropRect.left && centerX < dropRect.right &&
+                    centerY > dropRect.top && centerY < dropRect.bottom) {
+                    dropzone.classList.add('drag-over');
+                } else {
+                    dropzone.classList.remove('drag-over');
+                }
+            }
+        });
+
+        // SINGLE mouseup listener (with the check)
+        document.addEventListener('mouseup', (e) => {
+            if (isDragging && dragElement) {
+                // Check again if there's already a question
+                if (droppedQuestion !== null) {
+                    // Just return the drag element to floating
+                    dragElement.classList.remove('dragging');
+                    dragElement.style.position = 'absolute';
+                    dragElement.style.zIndex = '1';
+                    dragElement.style.pointerEvents = 'all';
+                    dragElement.dataset.posX = parseFloat(dragElement.dataset.posX);
+                    dragElement.dataset.posY = parseFloat(dragElement.dataset.posY);
+                    dropzone.classList.remove('drag-over');
+                    isDragging = false;
+                    dragElement = null;
+                    return;
+                }
+                
+                const dropRect = dropzone.getBoundingClientRect();
+                const elRect = dragElement.getBoundingClientRect();
+                const centerX = elRect.left + elRect.width / 2;
+                const centerY = elRect.top + elRect.height / 2;
+
+                if (centerX > dropRect.left && centerX < dropRect.right &&
+                    centerY > dropRect.top && centerY < dropRect.bottom) {
+                    const question = dragElement.dataset.question;
+                    const answer = dragElement.dataset.answer;
+                    placeInCenter(question, answer);
+                    dragElement.classList.add('dropped');
+                    dragElement.style.display = 'none';
+                    floatingElements = floatingElements.filter(el => el !== dragElement);
+                } else {
+                    dragElement.classList.remove('dragging');
+                    dragElement.style.position = 'absolute';
+                    dragElement.style.zIndex = '1';
+                    dragElement.style.pointerEvents = 'all';
+                    dragElement.dataset.posX = parseFloat(dragElement.dataset.posX);
+                    dragElement.dataset.posY = parseFloat(dragElement.dataset.posY);
+                    dropzone.classList.remove('drag-over');
+                }
+
+                isDragging = false;
+                dragElement = null;
+                dropzone.classList.remove('drag-over');
+            }
+        });
+
+        // ============================================
+        // DRAG & DROP (Touch)
+        // ============================================
+        function startDragTouch(e) {
+            // Check if there's already a question in the center
+            if (droppedQuestion !== null) {
+                e.preventDefault();
+                return; // Don't allow dragging
+            }
+            
+            if (e.target.classList.contains('float-question')) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                dragElement = e.target;
+                isDragging = true;
+                const rect = dragElement.getBoundingClientRect();
+                dragOffsetX = touch.clientX - rect.left;
+                dragOffsetY = touch.clientY - rect.top;
+                dragElement.classList.add('dragging');
+                dragElement.style.position = 'fixed';
+                dragElement.style.left = (touch.clientX - dragOffsetX) + 'px';
+                dragElement.style.top = (touch.clientY - dragOffsetY) + 'px';
+                dragElement.style.zIndex = '100';
+                dragElement.style.pointerEvents = 'all';
+                dropzone.classList.add('drag-over');
+            }
+        }
+
+        document.addEventListener('touchmove', (e) => {
+            if (isDragging && dragElement) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                dragElement.style.left = (touch.clientX - dragOffsetX) + 'px';
+                dragElement.style.top = (touch.clientY - dragOffsetY) + 'px';
+                dragElement.dataset.posX = touch.clientX - dragOffsetX;
+                dragElement.dataset.posY = touch.clientY - dragOffsetY;
+
+                const dropRect = dropzone.getBoundingClientRect();
+                const elRect = dragElement.getBoundingClientRect();
+                const centerX = elRect.left + elRect.width / 2;
+                const centerY = elRect.top + elRect.height / 2;
+
+                if (centerX > dropRect.left && centerX < dropRect.right &&
+                    centerY > dropRect.top && centerY < dropRect.bottom) {
+                    dropzone.classList.add('drag-over');
+                } else {
+                    dropzone.classList.remove('drag-over');
+                }
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchend', (e) => {
+            if (isDragging && dragElement) {
+                // Check again if there's already a question
+                if (droppedQuestion !== null) {
+                    // Just return the drag element to floating
+                    dragElement.classList.remove('dragging');
+                    dragElement.style.position = 'absolute';
+                    dragElement.style.zIndex = '1';
+                    dragElement.style.pointerEvents = 'all';
+                    dragElement.dataset.posX = parseFloat(dragElement.dataset.posX);
+                    dragElement.dataset.posY = parseFloat(dragElement.dataset.posY);
+                    dropzone.classList.remove('drag-over');
+                    isDragging = false;
+                    dragElement = null;
+                    return;
+                }
+                
+                const dropRect = dropzone.getBoundingClientRect();
+                const elRect = dragElement.getBoundingClientRect();
+                const centerX = elRect.left + elRect.width / 2;
+                const centerY = elRect.top + elRect.height / 2;
+
+                if (centerX > dropRect.left && centerX < dropRect.right &&
+                    centerY > dropRect.top && centerY < dropRect.bottom) {
+                    const question = dragElement.dataset.question;
+                    const answer = dragElement.dataset.answer;
+                    placeInCenter(question, answer);
+                    dragElement.classList.add('dropped');
+                    dragElement.style.display = 'none';
+                    floatingElements = floatingElements.filter(el => el !== dragElement);
+                } else {
+                    dragElement.classList.remove('dragging');
+                    dragElement.style.position = 'absolute';
+                    dragElement.style.zIndex = '1';
+                    dragElement.style.pointerEvents = 'all';
+                    dragElement.dataset.posX = parseFloat(dragElement.dataset.posX);
+                    dragElement.dataset.posY = parseFloat(dragElement.dataset.posY);
+                    dropzone.classList.remove('drag-over');
+                }
+
+                isDragging = false;
+                dragElement = null;
+                dropzone.classList.remove('drag-over');
+            }
+        });
+
+        // ============================================
+        // PLACE IN CENTER
+        // ============================================
+        function placeInCenter(question, answer) {
+            // Reset center question
+            centerQuestion.style.display = 'flex';
+            centerQuestion.classList.remove('flipped');
+            questionFront.textContent = question;
+            questionBack.textContent = answer;
+            centerQuestion.style.display = 'flex';
+
+            // Hide drop text
+            document.querySelector('.drop-zone-text').style.display = 'none';
+
+            // Show dismiss button
+            dismissBtn.classList.add('visible');
+
+            // Store the current question/answer
+            droppedQuestion = { question, answer };
+
+            // Enable lever
+            isPulled = false;
+            leverContainer.style.opacity = '1';
+            leverContainer.style.cursor = 'grab';
+
+            // Update counter
+            answeredCount++;
+            questionCount.textContent = answeredCount;
+
+            // ✅ ACHIEVEMENT: First question dropped (Curious)
+            if (!localStorage.getItem('achievement_first_question_dropped')) {
+                localStorage.setItem('achievement_first_question_dropped', 'true');
+
+                console.log('🔍 Checking if Achievements exists:', window.Achievements);
+
+                if (window.Achievements) {
+                    window.Achievements.checkCurious();
+                    console.log('🏆 Curious achievement unlocked!');
+                }
+            }
+
+            // ✅ ACHIEVEMENT: Track count and check if all questions answered
+            localStorage.setItem('achievement_answered_count', answeredCount.toString());
+            if (window.Achievements) {
+                window.Achievements.checkQuestionMaster();
+                // Check if all questions are answered (16 total)
+                if (answeredCount >= qaData.length) {
+                    console.log('🏆 Question Master achievement unlocked!');
+                }
+            }
+        }
+
+        // ============================================
+        // DISMISS BUTTON
+        // ============================================
+        dismissBtn.addEventListener('click', () => {
+            // Remove from center
+            centerQuestion.style.display = 'none';
+            centerQuestion.style.pointerEvents = 'none';
+            centerQuestion.classList.remove('flipped');
+            document.querySelector('.drop-zone-text').style.display = 'block';
+
+            // Hide dismiss button
+            dismissBtn.classList.remove('visible');
+
+            // Reset lever
+            isPulled = false;
+            droppedQuestion = null;  // THIS IS IMPORTANT - allows new drops
+            leverContainer.style.opacity = '1';
+            leverContainer.style.cursor = 'grab';
+            leverContainer.classList.remove('pulling');
+
+            // Reset cord and handle
+            leverCord.style.height = '';
+            leverHandle.style.transform = '';
+        });
+
+        // ============================================
+        // LEVER / PULL CORD (TOGGLE)
+        // ============================================
+        let isPullingLever = false;
+        let pullStart = 0;
+
+        leverContainer.addEventListener('mousedown', (e) => {
+            if (!droppedQuestion) return;
+            e.preventDefault();
+            isPullingLever = true;
+            pullStart = e.clientY;
+            leverContainer.classList.add('pulling');
+            leverContainer.style.cursor = 'grabbing';
+        });
+
+        leverContainer.addEventListener('touchstart', (e) => {
+            if (!droppedQuestion) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            isPullingLever = true;
+            pullStart = touch.clientY;
+            leverContainer.classList.add('pulling');
+        }, { passive: false });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isPullingLever && droppedQuestion) {
+                const delta = e.clientY - pullStart;
+                if (delta > 60) {
+                    triggerFlip();
+                    isPullingLever = false;
+                    leverContainer.classList.remove('pulling');
+                    leverContainer.style.cursor = 'grab';
+                }
+            }
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (isPullingLever && droppedQuestion) {
+                const touch = e.touches[0];
+                const delta = touch.clientY - pullStart;
+                if (delta > 60) {
+                    triggerFlip();
+                    isPullingLever = false;
+                    leverContainer.classList.remove('pulling');
+                    leverContainer.style.cursor = 'grab';
+                }
+            }
+        }, { passive: false });
+
+        document.addEventListener('mouseup', () => {
+            if (isPullingLever) {
+                isPullingLever = false;
+                leverContainer.classList.remove('pulling');
+                leverContainer.style.cursor = 'grab';
+            }
+        });
+
+        document.addEventListener('touchend', () => {
+            if (isPullingLever) {
+                isPullingLever = false;
+                leverContainer.classList.remove('pulling');
+            }
+        });
+
+        // ============================================
+        // TRIGGER FLIP (TOGGLE)
+        // ============================================
+        function triggerFlip() {
+            if (!droppedQuestion) return;
+
+            // Toggle the flip state
+            const isFlipped = centerQuestion.classList.contains('flipped');
+
+            if (isFlipped) {
+                // Flip back to question
+                centerQuestion.classList.remove('flipped');
+                isPulled = false;
+            } else {
+                // Flip to answer
+                centerQuestion.classList.add('flipped');
+                isPulled = true;
+            }
+
+            // Reset lever visual
+            leverContainer.classList.remove('pulling');
+            leverCord.style.height = '';
+            leverHandle.style.transform = '';
+            leverContainer.style.cursor = 'grab';
+        }
+
+        // ============================================
+        // START
+        // ============================================
+        spawnInitialQuestions();
+        animateFloating();
+
+        console.log('Curiosity page loaded!');
+        console.log(`${qaData.length} questions available`);
+    </script>
+
+    <script src="js/achievements.js"></script>
+</body>
+</html>

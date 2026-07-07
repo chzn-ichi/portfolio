@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chosen Grace Awiten | About</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/achievements.css" />
+</head>
+<body>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">chzn</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== ABOUT PAGE HEADER ===== -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">About Me</h1>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT CONTENT ===== -->
+    <section class="about-content">
+        <div class="container">
+
+            <div class="about-grid">
+                
+                <!-- Flipable Photo -->
+                <div class="about-photo">
+                    <div class="flip-container" id="flipContainer">
+                        <div class="flip-inner">
+                            <!-- FRONT: You facing forward -->
+                            <div class="flip-front">
+                                <img src="images/me.png" alt="Grace Awiten - Front" />
+                            </div>
+                            <!-- BACK: You from behind -->
+                            <div class="flip-back">
+                                <img src="images/me-back.png" alt="Grace Awiten - Back" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bio -->
+                <div class="about-bio">
+                    <h2 class="about-name">Hi, I'm Chosen.</h2>
+                    <p class="about-text">
+                        I'm an IT student who builds weirdly specific things. I have a habit of 
+                        turning random ideas into software—usually because I spend two hours 
+                        searching for a tool that should exist, find nothing, and accidentally 
+                        create it myself.
+                    </p>
+                    <p class="about-text">
+                        Most of my projects come from noticing small problems that don't seem to 
+                        have the solution I'm looking for. Rather than waiting for someone else 
+                        to build it, I try it myself.
+                    </p>
+                    <p class="about-text">
+                        I'm constantly learning, prompting AI, blaming it for every bug, and then 
+                        quietly apologizing when I realize I was the one who forgot a semicolon.
+                    </p>
+                    <p class="about-text highlight-text">
+                        I don't know my niche yet. But I know I love creating stuff no one has 
+                        built before.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- ===== SKILLS SECTION ===== -->
+            <section class="skills">
+                <div class="container">
+                    <h3 class="section-title">What I've <span class="highlight">Actually Used</span></h3>
+                    <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg); font-size: 0.95rem;">
+                        Some I know well. Some I've met once.
+                    </p>
+                    
+                    <div class="skills-grid">
+                        <!-- Frontend -->
+                        <div class="skill-group">
+                            <h3 class="skill-group-title">Frontend</h3>
+                            <div class="skill-bar">
+                                <div class="skill-bar-label">
+                                    <span>HTML</span>
+                                    <span>85%</span>
+                                </div>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" style="width: 85%;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-label">
+                                    <span>CSS</span>
+                                    <span>50%</span>
+                                </div>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-label">
+                                    <span>JavaScript</span>
+                                    <span>45%</span>
+                                </div>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" style="width: 45%;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-label">
+                                    <span>ReactJS</span>
+                                    <span>20%</span>
+                                </div>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" style="width: 20%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Backend -->
+                        <div class="skill-group">
+                            <h3 class="skill-group-title">Backend</h3>
+                            <div class="skill-bar">
+                                <div class="skill-bar-label">
+                                    <span>PHP</span>
+                                    <span>30%</span>
+                                </div>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" style="width: 30%;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-label">
+                                    <span>Laravel</span>
+                                    <span>15%</span>
+                                </div>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" style="width: 15%;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-label">
+                                    <span>Python</span>
+                                    <span>75%</span>
+                                </div>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" style="width: 75%;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-label">
+                                    <span>Java</span>
+                                    <span>30%</span>
+                                </div>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" style="width: 30%;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-label">
+                                    <span>C</span>
+                                    <span>35%</span>
+                                </div>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" style="width: 35%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Database -->
+                        <div class="skill-group">
+                            <h3 class="skill-group-title">Database</h3>
+                            <div class="skill-bar">
+                                <div class="skill-bar-label">
+                                    <span>MySQL</span>
+                                    <span>50%</span>
+                                </div>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-label">
+                                    <span>PostgreSQL</span>
+                                    <span>45%</span>
+                                </div>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" style="width: 45%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tools -->
+                        <div class="skill-group">
+                            <h3 class="skill-group-title">Tools</h3>
+                            <div class="skill-bar">
+                                <div class="skill-bar-label">
+                                    <span>VS Code</span>
+                                    <span>90%</span>
+                                </div>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" style="width: 90%;"></div>
+                                </div>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-bar-label">
+                                    <span>Git</span>
+                                    <span>67%</span>
+                                </div>
+                                <div class="skill-bar-track">
+                                    <div class="skill-bar-fill" style="width: 67%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Honest footer note -->
+                    <div class="skill-note">
+                        <p>
+                            <span style="color: var(--text-muted);">These are self-assessed. Please don't ask me about any of them.</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ===== EDUCATION SECTION (Terminal Style) ===== -->
+            <section class="education">
+                <div class="container">
+                    <h3 class="section-title">$ <span class="highlight">education</span></h3>
+                    <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg); font-family: var(--font-code); font-size: 0.9rem;">
+                        ➜ cat /usr/local/chzn/education.txt
+                    </p>
+
+                    <div class="terminal-window">
+                        <!-- Terminal Header -->
+                        <div class="terminal-header">
+                            <div class="terminal-dots">
+                                <span class="dot dot-red"></span>
+                                <span class="dot dot-yellow"></span>
+                                <span class="dot dot-green"></span>
+                            </div>
+                            <span class="terminal-title">chzn@portfolio: ~/education</span>
+                            <span class="terminal-spacer"></span>
+                        </div>
+
+                        <!-- Terminal Body -->
+                        <div class="terminal-body">
+                            <!-- Command line -->
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">➜</span>
+                                <span class="terminal-command">ls -la education/</span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">total 4</span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">drwxr-xr-x  4 chzn  staff  128 Jul  5 14:32 .</span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">drwxr-xr-x  8 chzn  staff  256 Jul  5 14:32 ..</span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text" style="color: var(--text-muted);">───</span>
+                            </div>
+
+                            <!-- Education Entry 1: Elementary -->
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text" style="color: var(--accent-cyan);">ELEMENTARY SCHOOL</span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">├── School: <span style="color: var(--text-primary);">Sagay Central School</span></span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">├── Honors: <span style="color: var(--text-primary);">With High Honors</span></span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">└── Period: <span style="color: var(--text-primary);">2012 - 2018</span></span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text" style="color: var(--text-muted);">│</span>
+                            </div>
+
+                            <!-- Education Entry 2: Junior High -->
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text" style="color: var(--accent-cyan);">JUNIOR HIGH SCHOOL</span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">├── School: <span style="color: var(--text-primary);">Eualalio U. Pabillore National High School</span></span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">├── Honors: <span style="color: var(--text-primary);">With High Honors</span></span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">└── Period: <span style="color: var(--text-primary);">2018 - 2022</span></span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text" style="color: var(--text-muted);">│</span>
+                            </div>
+
+                            <!-- Education Entry 3: Senior High -->
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text" style="color: var(--accent-cyan);">SENIOR HIGH SCHOOL</span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">├── School: <span style="color: var(--text-primary);">Eulalio U. Pabillore National High School</span></span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">├── Honors: <span style="color: var(--text-primary);">With High Honors</span></span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">└── Period: <span style="color: var(--text-primary);">2022 - 2024</span></span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text" style="color: var(--text-muted);">│</span>
+                            </div>
+
+                            <!-- Education Entry 4: College -->
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text" style="color: var(--accent-cyan);">COLLEGE</span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">├── School: <span style="color: var(--text-primary);">University of Science & Technology of Southern Philippines</span></span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">├── Program: <span style="color: var(--text-primary);">BS in Information Technology</span></span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text">└── Period: <span style="color: var(--text-primary);">2024 - Present</span></span>
+                            </div>
+                            <div class="terminal-line terminal-output">
+                                <span class="terminal-text" style="color: var(--text-muted);">│</span>
+                            </div>
+
+                            <!-- End with cursor -->
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">➜</span>
+                                <span class="terminal-command" style="color: var(--text-muted);">cat education.txt</span>
+                                <span class="terminal-cursor">█</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ===== SIDE QUESTS - STACKING CARDS (Scroll) ===== -->
+            <section class="side-quests">
+                <div class="container">
+                    <div class="section-header">
+                        <h3 class="section-title">My Random <span class="highlight">Side Quests</span></h3>
+                        <p style="color: var(--text-secondary); max-width: 600px;">
+                            Scroll down to see what I've done so far!
+                        </p>
+                    </div>
+                    
+                    <ul class="stack-cards js-stack-cards">
+                        <!-- Card 1: Cold Outreach -->
+                        <li class="stack-cards__item js-stack-cards__item">
+                            <div class="stack-card-content">
+                                <h3 class="stack-card-title">Cold Outreach</h3>
+                                <p class="stack-card-desc">
+                                    Reached out to potential clients via email, LinkedIn, and website contact forms. Helped a business find new customers.
+                                </p>
+                                <div class="stack-card-tags">
+                                    <span class="stack-tag">Communication</span>
+                                    <span class="stack-tag">Email</span>
+                                    <span class="stack-tag">LinkedIn</span>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- Card 2: B2B Lead Generation -->
+                        <li class="stack-cards__item js-stack-cards__item">
+                            <div class="stack-card-content">
+                                <h3 class="stack-card-title">B2B Lead Generation</h3>
+                                <p class="stack-card-desc">
+                                    Researched and identified potential clients for a business. Found the right people to reach out to.
+                                </p>
+                                <div class="stack-card-tags">
+                                    <span class="stack-tag">Research</span>
+                                    <span class="stack-tag">LinkedIn</span>
+                                    <span class="stack-tag">Prospecting</span>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <!-- Card 3: Data Entry -->
+                        <li class="stack-cards__item js-stack-cards__item">
+                            <div class="stack-card-content">
+                                <h3 class="stack-card-title">Data Entry</h3>
+                                <p class="stack-card-desc">
+                                    Organized and managed data for a business. Made sure everything was accurate and easy to find.
+                                </p>
+                                <div class="stack-card-tags">
+                                    <span class="stack-tag">Organization</span>
+                                    <span class="stack-tag">Attention to Detail</span>
+                                    <span class="stack-tag">Spreadsheets</span>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- Card 4: Random -->
+                        <li class="stack-cards__item js-stack-cards__item">
+                            <div class="stack-card-content">
+                                <h3 class="stack-card-title">Video Data Annotation</h3>
+                                <p class="stack-card-desc">
+                                    Annotate videos for robotics. I've worked for Remotasks and Linewise.
+                                </p>
+                                <div class="stack-card-tags">
+                                    <span class="stack-tag">Robotics</span>
+                                    <span class="stack-tag">Tasks</span>
+                                    <span class="stack-tag">Annotation</span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Card 4b: Random -->
+                        <li class="stack-cards__item js-stack-cards__item">
+                            <div class="stack-card-content">
+                                <h3 class="stack-card-title">Yeagerist</h3>
+                                <p class="stack-card-desc">
+                                    Eren Yeager has done nothing wrong.
+                                </p>
+                                <div class="stack-card-tags">
+                                    <span class="stack-tag">Freedom</span>
+                                    <span class="stack-tag">Paradis</span>
+                                    <span class="stack-tag">Yeager</span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Card 5: Random -->
+                        <li class="stack-cards__item js-stack-cards__item">
+                            <div class="stack-card-content">
+                                <h3 class="stack-card-title">Illegal Stuff</h3>
+                                <p class="stack-card-desc">
+                                    Just kidding. I'm a law-abiding citizen.
+                                </p>
+                                <div class="stack-card-tags">
+                                    <span class="stack-tag">Justice</span>
+                                    <span class="stack-tag">Legal</span>
+                                    <span class="stack-tag">Peace</span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Card 6: Random -->
+                        <li class="stack-cards__item js-stack-cards__item">
+                            <div class="stack-card-content">
+                                <h3 class="stack-card-title">Law-Abiding Citizen</h3>
+                                <p class="stack-card-desc">
+                                    My full-time side quest. I really am. Trust me.
+                                </p>
+                                <div class="stack-card-tags">
+                                    <span class="stack-tag">Law</span>
+                                    <span class="stack-tag">Righteousness</span>
+                                    <span class="stack-tag">Since Birth</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <br>
+                    <div class="quest-note">
+                        <p style="color: var(--text-secondary); font-size: 1rem; text-align: center; max-width: 550px; margin: 0 auto; line-height: 1.7;">
+                            I helped my mom with these side quests. 
+                            If you're looking for someone to handle 
+                            <span style="color: var(--text-primary);">data entry</span>, 
+                            <span style="color: var(--text-primary);">lead generation</span>, or 
+                            <span style="color: var(--text-primary);">cold outreach</span>— 
+                            <span style="color: var(--text-secondary);">I'd love to help.</span>
+                            <br />
+                            <span style="color: var(--accent-cyan); font-size: 0.90rem;">
+                                Small rates are perfectly fine.
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ===== MEME TESTIMONIALS ===== -->
+            <div class="testimonials-section">
+                <h3 class="section-title">Trustworthy <span class="highlight">Testimonies</span></h3>
+                <br>
+                <div class="testimonial-card">
+                    <div class="testimonial-icon">“</div>
+                    <blockquote>
+                        This girl keeps bothering me to build her crazy ideas, breaks them, 
+                        fixes them, then comes back with an even bigger one. It's exhausting. 
+                        I respect it.
+                    </blockquote>
+                    <cite>— DeepSeek AI</cite>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-icon">“</div>
+                    <blockquote>
+                        Meow.
+                    </blockquote>
+                    <cite>— Our Neighbor's Cat</cite>
+                </div>
+            </div>
+
+            <!-- After the testimonial section, before the footer -->
+            <div style="text-align: center; margin-top: var(--spacing-xxl);">
+                <a href="curiosity.html" class="btn btn-primary" style="font-size: 1rem; padding: 1rem 2.8rem;">
+                    Want to know more? Click here!
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ===== ACHIEVEMENTS MODAL ===== -->
+    <div class="achievement-modal-overlay" id="achievementModal">
+        <div class="achievement-modal">
+            <div class="achievement-modal-header">
+                <h2 class="achievement-modal-title">
+                    <img src="images/achievements/trophy.png" alt="Achievements" class="achievement-modal-icon" />
+                    <span>Achievements</span>
+                </h2>
+                <button class="achievement-modal-close" id="achievementModalClose">✕</button>
+            </div>
+            
+            <div class="achievement-modal-progress">
+                <div class="achievement-modal-progress-text">
+                    <span>Progress</span>
+                    <span id="achievementProgressText">0/12</span>
+                </div>
+                <div class="achievement-modal-progress-bar">
+                    <div class="achievement-modal-progress-fill" id="achievementProgressFill" style="width: 0%;"></div>
+                </div>
+            </div>
+            
+            <div class="achievement-grid" id="achievementGrid">
+                <!-- Filled by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===== ACHIEVEMENT BADGE ===== -->
+    <div class="achievement-badge" id="achievementBadge" onclick="window.Achievements.toggleModal()">
+        <img src="images/achievements/trophy.png" alt="Achievements" class="achievement-modal-icon" />
+        <span class="achievement-badge-text">
+            <span class="achievement-badge-count">0/12</span>
+        </span>
+        <div class="achievement-badge-progress">
+            <div class="achievement-badge-progress-fill" style="width: 0%;"></div>
+        </div>
+    </div>
+
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 Chosen Grace Awiten. Built with love and lots of AI prompting.</p>
+                <div class="footer-links">
+                    <a href="https://github.com/chzn-ichi" target="_blank">
+                        <img src="images/github-icon.png" alt="GitHub" class="footer-icon" />
+                    </a>
+                    <a href="https://www.linkedin.com/in/chosen-grace-awiten-b89368368/" target="_blank">
+                        <img src="images/linkedin-icon.png" alt="LinkedIn" class="footer-icon" />
+                    </a>
+                    <a href="https://x.com/chznichi" target="_blank">
+                        <img src="images/x-icon.png" alt="X" class="footer-icon" />
+                    </a>
+                    <a href="https://www.instagram.com/chzn.ichi" target="_blank">
+                        <img src="images/ig-icon.png" alt="Instagram" class="footer-icon" />
+                    </a>
+                    <a href="https://www.facebook.com/chozen.awiten" target="_blank">
+                        <img src="images/fb-icon.png" alt="Facebook" class="footer-icon" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/achievements.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        window.Achievements.checkPageHopper(['about']);
+    </script>
+</body>
+</html>

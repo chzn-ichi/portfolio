@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chosen Grace Awiten | Home</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- OpenSauce fonts (self-hosted fallback - we'll use system fonts as fallback) -->
+    <!-- Note: For OpenSauce, you'll need to download and host them, or use a CDN if available -->
+    <!-- I'll use similar Google Fonts as fallback: Open Sans and Inter -->
+    
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/achievements.css" />
+</head>
+<body>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">chzn</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">Creative Developer</span>
+                <h1 class="hero-title">
+                    I build things<br />
+                    <span class="highlight">that don't exist yet.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Probably because no one else thought they were necessary.
+                </p>
+                <div class="hero-buttons">
+                    <a href="work.html" class="btn btn-primary">View My Work</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===== BEHIND THE CODE SECTION ===== -->
+    <section class="behind-the-code">
+        <div class="container">
+            <div class="behind-grid">
+                <!-- Left: Photo -->
+                <div class="behind-photo">
+                    <img src="images/me-who.png" alt="Chosen Grace Awiten" />
+                </div>
+
+                <!-- Right: Info + CTA -->
+                <div class="behind-info">
+                    <span class="section-tag">✦ Behind the Code</span>
+                    <h2 class="behind-title">IT Student • <span class="highlight">Vibe Coder</span> • Problem Finder</h2>
+                    
+                    <div class="behind-badges">
+                        <span class="badge">BSIT Student at USTP-CDO</span>
+                        <span class="badge">Creative Developer</span>
+                        <span class="badge">Sagittarius</span>
+                    </div>
+                    
+                    <a href="about.html" class="btn btn-primary">
+                        Explore About Me →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===== FEATURED PROJECT TEASER ===== -->
+    <section class="featured">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">✦ Featured Project</span>
+                <h2 class="section-title">Something I built recently</h2>
+            </div>
+            
+            <div class="featured-card">
+                <div class="featured-image">
+                    <img src="images/screenshot1.png" alt="Project 1 Screenshot" class="project-screenshot" />
+                </div>
+                <div class="featured-info">
+                    <h3 class="project-name">COR to Timetable & Lockscreen Wallpaper</h3>
+                    <p class="project-desc">
+                        Turn your USTP COR pdf into a timetable, a lockscreen wallpaper, or an ics file.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://whatsmysched.netlify.app/" class="btn btn-small btn-primary">Visit Here</a>
+                        <a href="https://github.com/chzn-ichi/cor-timetable" class="btn btn-small btn-secondary">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===== TESTIMONIAL (MEME) ===== -->
+    <section class="testimonial">
+        <div class="container">
+            <div class="testimonial-card">
+                <div class="testimonial-icon">“</div>
+                <blockquote>
+                    This girl keeps bothering me to build her crazy ideas, breaks them, 
+                    fixes them, then comes back with an even bigger one. It's exhausting. 
+                    I respect it.
+                </blockquote>
+                <cite>— DeepSeek AI</cite>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===== ACHIEVEMENTS MODAL ===== -->
+    <div class="achievement-modal-overlay" id="achievementModal">
+        <div class="achievement-modal">
+            <div class="achievement-modal-header">
+                <h2 class="achievement-modal-title">
+                    <img src="images/achievements/trophy.png" alt="Achievements" class="achievement-modal-icon" />
+                    <span>Achievements</span>
+                </h2>
+                <button class="achievement-modal-close" id="achievementModalClose">✕</button>
+            </div>
+            
+            <div class="achievement-modal-progress">
+                <div class="achievement-modal-progress-text">
+                    <span>Progress</span>
+                    <span id="achievementProgressText">0/12</span>
+                </div>
+                <div class="achievement-modal-progress-bar">
+                    <div class="achievement-modal-progress-fill" id="achievementProgressFill" style="width: 0%;"></div>
+                </div>
+            </div>
+            
+            <div class="achievement-grid" id="achievementGrid">
+                <!-- Filled by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===== ACHIEVEMENT BADGE ===== -->
+    <div class="achievement-badge" id="achievementBadge" onclick="window.Achievements.toggleModal()">
+        <img src="images/achievements/trophy.png" alt="Achievements" class="achievement-modal-icon" />
+        <span class="achievement-badge-text">
+            <span class="achievement-badge-count">0/12</span>
+        </span>
+        <div class="achievement-badge-progress">
+            <div class="achievement-badge-progress-fill" style="width: 0%;"></div>
+        </div>
+    </div>
+
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 Chosen Grace Awiten. Built with love and lots of AI prompting.</p>
+                <div class="footer-links">
+                    <a href="https://github.com/chzn-ichi" target="_blank">
+                        <img src="images/github-icon.png" alt="GitHub" class="footer-icon" />
+                    </a>
+                    <a href="https://www.linkedin.com/in/chosen-grace-awiten-b89368368/" target="_blank">
+                        <img src="images/linkedin-icon.png" alt="LinkedIn" class="footer-icon" />
+                    </a>
+                    <a href="https://x.com/chznichi" target="_blank">
+                        <img src="images/x-icon.png" alt="X" class="footer-icon" />
+                    </a>
+                    <a href="https://www.instagram.com/chzn.ichi" target="_blank">
+                        <img src="images/ig-icon.png" alt="Instagram" class="footer-icon" />
+                    </a>
+                    <a href="https://www.facebook.com/chozen.awiten" target="_blank">
+                        <img src="images/fb-icon.png" alt="Facebook" class="footer-icon" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/achievements.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        window.Achievements.checkPageHopper(['index']);
+    </script>
+</body>
+</html>
